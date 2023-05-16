@@ -1,0 +1,123 @@
+        <p-dialog [(visible)]="createDialog" [style]="{width: '70vw'}" header="{{'semesterTabPan' | translate}}" [modal]="true" styleClass="p-fluid" [maximizable]="true" [draggable]="false" [resizable]="false">
+            <ng-template pTemplate="content" >
+                        <p-tabView>
+                            <p-tabPanel header="{{'{{'semesterTabPan' | translate}}' | translate}}">
+                                <div class="grid">
+
+                                                <div class="field col-12 md:col-6">
+                                                    <label for="1">{{'semesterCode' | translate}}<span style="color: red;">*</span></label>
+                                                    <input class="mb-2 mr-2" type="text" pInputText  placeholder="{{'semesterCode' | translate}}" id="1" [(ngModel)]="item.code"
+                                                            [ngClass]="{'ng-invalid ng-dirty' : !validSemesterCode}"  />
+                                                    <small class='p-error' *ngIf='!validSemesterCode'>Code est obligatoire.</small>
+                                                </div>
+
+
+
+                                                <div class="field col-12 md:col-6">
+                                                    <label for="2">{{'semesterLibelle' | translate}}<span style="color: red;">*</span></label>
+                                                    <input class="mb-2 mr-2" type="text" pInputText  placeholder="{{'semesterLibelle' | translate}}" id="2" [(ngModel)]="item.libelle"
+                                                            [ngClass]="{'ng-invalid ng-dirty' : !validSemesterLibelle}"  />
+                                                    <small class='p-error' *ngIf='!validSemesterLibelle'>Libelle est obligatoire.</small>
+                                                </div>
+
+
+
+                                                <div class="field col-12 md:col-6">
+                                                    <label for="3">{{'semesterStartDate' | translate}}</label>
+                                                    <p-calendar appendTo="body" id="3"  [showTime]="true" [showSeconds]="false" placeholder="{{'semesterStartDate' | translate}}"  [(ngModel)]="item.startDate"
+                                                            dateFormat="{{dateFormat}}"  >
+                                                    </p-calendar>
+                                                    
+                                                </div>
+
+                                                <div class="field col-12 md:col-6">
+                                                    <label for="4">{{'semesterEndDate' | translate}}</label>
+                                                    <p-calendar appendTo="body" id="4"  [showTime]="true" [showSeconds]="false" placeholder="{{'semesterEndDate' | translate}}"  [(ngModel)]="item.endDate"
+                                                            dateFormat="{{dateFormat}}"  >
+                                                    </p-calendar>
+                                                    
+                                                </div>
+
+                                            <div class="field col-11 md:col-5">
+                                                <label for="5">{{'semesterTraining' | translate}}</label>
+                                                <p-dropdown  appendTo="body"  [options]="trainings" [(ngModel)]="item.training" id="5" [filter]="true" filterMatchMode="contains"
+                                                        [showClear]="true" optionLabel="libelle" placeholder="{{'semesterTraining' | translate}}"  >
+                                                </p-dropdown>
+                                                
+                                            </div>
+                                                <div class="col-1">
+                                                    <label></label>
+                                                    <button pButton pRipple type="button" icon="pi pi-plus" (click)="openCreateTraining('Training')" class="p-button-success one-colonne-btn-success-align"></button>
+                                                </div>
+                                </div>
+                            </p-tabPanel>
+                                    <p-tabPanel header="semesterModules">
+                                        <p-tabView [(activeIndex)]="activeTab">
+                                            <p-tabPanel header="Création">
+                                                    <div class="grid">
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <label for="1">Code<span style="color: red;">*</span></label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Code"
+                                                                               id="1" [(ngModel)]="modulesElement.code" autofocus  [ngClass]="{'ng-invalid ng-dirty' : !validModulesCode}"  >
+                                                                        <small class='p-error' *ngIf='!validModulesCode'>Code est obligatoire.</small>
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <label for="2">Libelle<span style="color: red;">*</span></label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Libelle"
+                                                                               id="2" [(ngModel)]="modulesElement.libelle" autofocus  [ngClass]="{'ng-invalid ng-dirty' : !validModulesLibelle}"  >
+                                                                        <small class='p-error' *ngIf='!validModulesLibelle'>Libelle est obligatoire.</small>
+                                                                    </div>
+                                                        <div class="field col-12 md:col-1">
+                                                            <button pButton pRipple type="button" icon="pi pi-plus" class="mt-4" label="OK" (click)="addModules()"></button>
+                                                        </div>
+
+                                                    </div>
+                                            </p-tabPanel>
+                                            <p-tabPanel header="Liste {{item.modules?.length > 0 ? '(' + item.modules?.length + ')' : ''}}">
+                                                    <div class="card">
+                                                        <p-table [value]="item.modules" [scrollable]="true" scrollHeight="200px">
+                                                            <ng-template pTemplate="header">
+                                                                <tr>
+                                                                                <th>Code</th>
+                                                                                <th>Libelle</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </ng-template>
+                                                            <ng-template pTemplate="body" let-p>
+                                                                <tr>
+                                                                                <td>{{p.code}}</td>
+                                                                                <td>{{p.libelle}}</td>
+                                                                    <td>
+                                                                        <button (click)="deleteModule(p)" pButton type="button" icon="pi pi-times"  class="p-button-rounded p-button-danger"></button>
+                                                                        <button (click)="editModule(p)" pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"></button>
+                                                                    </td>
+                                                                </tr>
+                                                            </ng-template>
+                                                        </p-table>
+                                                    </div>
+
+                                            </p-tabPanel>
+                                        </p-tabView>
+                                    </p-tabPanel>
+
+
+                        </p-tabView>
+
+            </ng-template>
+
+            <ng-template pTemplate="footer" >
+                <div class="grid-step">
+                        <div style="margin-left: auto;">
+                            <button pButton pRipple  label="{{'validate' | translate}}"  icon="pi pi-check" style="margin:10px" (click)="save()"></button>
+                        </div>
+                        <div>
+                            <button pButton pRipple  label="{{'cancel' | translate}}" icon="pi pi-times" class="p-button-outlined" (click)="hideCreateDialog()"></button>
+                        </div>
+
+                </div>
+            </ng-template>
+
+            <app-training-create-admin></app-training-create-admin>
+
+
+    </p-dialog>

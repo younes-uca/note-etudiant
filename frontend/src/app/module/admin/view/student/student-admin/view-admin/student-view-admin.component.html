@@ -1,0 +1,144 @@
+
+<p-dialog [(visible)]="viewDialog" [style]="{width: '70vw'}" header="{{'studentTabPan' | translate}}" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <p-tabView>
+            <p-tabPanel header="{{'studentTabPan' | translate}}">
+                <div class="grid">
+                    <div class="field col-12 md:col-3">
+                        <label for="1">{{'Cin' | translate}}</label>
+                        <input class="mb-2 mr-2" type="text" pInputText [disabled]="true" placeholder="{{'Cin' | translate}}" autofocus  id="1" [(ngModel)]="item.cin">
+                    </div>
+                    <div class="field col-12 md:col-3">
+                        <label for="2">{{'First name' | translate}}</label>
+                        <input class="mb-2 mr-2" type="text" pInputText [disabled]="true" placeholder="{{'First name' | translate}}" autofocus  id="2" [(ngModel)]="item.firstName">
+                    </div>
+                    <div class="field col-12 md:col-3">
+                        <label for="3">{{'Last name' | translate}}</label>
+                        <input class="mb-2 mr-2" type="text" pInputText [disabled]="true" placeholder="{{'Last name' | translate}}" autofocus  id="3" [(ngModel)]="item.lastName">
+                    </div>
+                    <div class="field col-12 md:col-3">
+                        <label for="4">{{'Email' | translate}}</label>
+                        <input class="mb-2 mr-2" type="text" pInputText [disabled]="true" placeholder="{{'Email' | translate}}" autofocus  id="4" [(ngModel)]="item.email">
+                    </div>
+                    <div class="field col-12 md:col-3">
+                        <label for="5">{{'Phone number' | translate}}</label>
+                        <input class="mb-2 mr-2" type="text" pInputText [disabled]="true" placeholder="{{'Phone number' | translate}}" autofocus  id="5" [(ngModel)]="item.phoneNumber">
+                    </div>
+                    <div class="field col-12 md:col-3">
+                        <label for="6">{{'Address' | translate}}</label>
+                        <input class="mb-2 mr-2" type="text" pInputText [disabled]="true" placeholder="{{'Address' | translate}}" autofocus  id="6" [(ngModel)]="item.address">
+                    </div>
+                    <div class="field col-12 md:col-3">
+                        <label for="7">{{'Registration date' | translate}}</label>
+                        <p-calendar id="7" [disabled]="true"  [showTime]="true" [showSeconds]="false" placeholder="{{'Registration date' | translate}}"  [(ngModel)]="item.registrationDate" dateFormat="{{dateFormat}}"></p-calendar>
+                    </div>
+                    <div class="field col-12 md:col-3">
+                        <label for="8">{{'Training' | translate}}</label>
+                        <p-dropdown [options]="trainings" [(ngModel)]="item.training" id="8" [disabled]="true" optionLabel="libelle" placeholder="{{'Training' | translate}}"></p-dropdown>
+                    </div>
+                    <div class="field align-inputswitch col-12  md:col-3">
+                        <div  class="label-inputswitch">
+                            <label for="12">{{'Graduated' | translate}}</label>
+                        </div>
+                        <div class="input-switch">
+                            <p-inputSwitch id="12"  [disabled]="true" [(ngModel)]="item.graduated"></p-inputSwitch>
+                        </div>
+                    </div>
+                    <div class="field col-12 md:col-3">
+                        <label for="13">{{'Diploma' | translate}}</label>
+                        <p-dropdown [options]="diplomas" [(ngModel)]="item.diploma" id="13" [disabled]="true" optionLabel="id" placeholder="{{'Diploma' | translate}}"></p-dropdown>
+                    </div>
+                </div>
+            </p-tabPanel>
+
+            <p-tabPanel header="studentModulesGrades">
+                <div class="grid">
+                    <div class="col">
+                        <div class="card">
+                            <p-table [value]="item.modulesGrades" [scrollable]="true" scrollHeight="200px">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Module</th>
+                                        <th>Semester</th>
+                                        <th>Grade</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-p>
+                                    <tr>
+                                        <td>{{p.module?.libelle}}</td>
+                                        <td>{{p.semester?.libelle}}</td>
+                                        <td>{{p.grade}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="studentSemestersAverages">
+                <div class="grid">
+                    <div class="col">
+                        <div class="card">
+                            <p-table [value]="item.semestersAverages" [scrollable]="true" scrollHeight="200px">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Semester</th>
+                                        <th>Average</th>
+                                        <th>Validated</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-p>
+                                    <tr>
+                                        <td>{{p.semester?.libelle}}</td>
+                                        <td>{{p.average}}</td>
+                                        <td><i *ngIf="p.validated" class="pi pi-check checked-toogle"></i>
+                                            <i *ngIf="!p.validated" class="pi pi-times unchecked-toogle"></i>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="studentPayments">
+                <div class="grid">
+                    <div class="col">
+                        <div class="card">
+                            <p-table [value]="item.payments" [scrollable]="true" scrollHeight="200px">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Training</th>
+                                        <th>Semester</th>
+                                        <th>Amount</th>
+                                        <th>Paid date</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-p>
+                                    <tr>
+                                        <td>{{p.Training?.libelle}}</td>
+                                        <td>{{p.semester?.libelle}}</td>
+                                        <td>{{p.amount}}</td>
+                                        <td>{{p.paidDate | date: dateFormatColumn}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </p-tabPanel>
+        </p-tabView>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer" >
+        <div class="grid-footer">
+            <div>
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-outlined" (click)="hideViewDialog()"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>
+
+
+

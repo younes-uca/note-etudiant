@@ -1,0 +1,55 @@
+        <p-dialog [(visible)]="editDialog" [style]="{width: '70vw'}" header="{{'diplomaTabPan' | translate}}" [modal]="true" styleClass="p-fluid" [maximizable]="true" [draggable]="false" [resizable]="false">
+            <ng-template pTemplate="content" >
+                <p-tabView>
+                    <p-tabPanel header="{{'diplomaTabPan' | translate}}">
+                        <div class="grid">
+
+
+                                    <div class="field col-11 md:col-5">
+                                            <label for="1">{{'diplomaStudent' | translate}}</label>
+                                            <p-dropdown   appendTo="body" [options]="students" [(ngModel)]="item.student" id="1"[filter]="true" filterMatchMode="contains"
+                                                    [showClear]="true" optionLabel="cin" placeholder="{{'diplomaStudent' | translate}}"  >
+                                            </p-dropdown>
+                                            
+                                        </div>
+                                        <div class="col-1">
+                                            <label></label>
+                                            <button pButton pRipple type="button" icon="pi pi-plus" (click)="openCreateStudent('Student')" class="p-button-success one-colonne-btn-success-align"></button>
+                                        </div>
+
+                                    <div class="field col-11 md:col-5">
+                                            <label for="2">{{'diplomaTraining' | translate}}</label>
+                                            <p-dropdown   appendTo="body" [options]="trainings" [(ngModel)]="item.training" id="2"[filter]="true" filterMatchMode="contains"
+                                                    [showClear]="true" optionLabel="libelle" placeholder="{{'diplomaTraining' | translate}}"  >
+                                            </p-dropdown>
+                                            
+                                        </div>
+
+                                        <div class="field col-12 md:col-6">
+                                            <label for="3">{{'diplomaDateIssued' | translate}}</label>
+                                            <p-calendar appendTo="body" id="3"   [showTime]="true" [showSeconds]="false" placeholder="{{'diplomaDateIssued' | translate}}"  [(ngModel)]="item.dateIssued"
+                                                      >
+                                            </p-calendar>
+                                            
+                                        </div>
+                        </div>
+                    </p-tabPanel>
+
+                </p-tabView>
+            </ng-template>
+
+            <ng-template pTemplate="footer" >
+                <div class="grid-footer">
+                        <div>
+                            <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-outlined" (click)="hideEditDialog()"></button>
+                        </div>
+                    <div>
+                        <button pButton pRipple label="Valider" icon="pi pi-check" style="margin:10px" (click)="edit()"></button>
+                    </div>
+                </div>
+            </ng-template>
+
+                    <app-student-create-admin></app-student-create-admin>
+
+
+    </p-dialog>

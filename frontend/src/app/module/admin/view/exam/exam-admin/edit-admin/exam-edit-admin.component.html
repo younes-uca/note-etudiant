@@ -1,0 +1,96 @@
+        <p-dialog [(visible)]="editDialog" [style]="{width: '70vw'}" header="{{'examTabPan' | translate}}" [modal]="true" styleClass="p-fluid" [maximizable]="true" [draggable]="false" [resizable]="false">
+            <ng-template pTemplate="content" >
+                <p-tabView>
+                    <p-tabPanel header="{{'examTabPan' | translate}}">
+                        <div class="grid">
+
+
+                                    <div class="field col-11 md:col-5">
+                                            <label for="1">{{'examModule' | translate}}</label>
+                                            <p-dropdown   appendTo="body" [options]="modules" [(ngModel)]="item.module" id="1"[filter]="true" filterMatchMode="contains"
+                                                    [showClear]="true" optionLabel="libelle" placeholder="{{'examModule' | translate}}"  >
+                                            </p-dropdown>
+                                            
+                                        </div>
+
+                                    <div class="field col-11 md:col-5">
+                                            <label for="2">{{'examSemester' | translate}}</label>
+                                            <p-dropdown   appendTo="body" [options]="semesters" [(ngModel)]="item.semester" id="2"[filter]="true" filterMatchMode="contains"
+                                                    [showClear]="true" optionLabel="libelle" placeholder="{{'examSemester' | translate}}"  >
+                                            </p-dropdown>
+                                            
+                                        </div>
+
+                                        <div class="field col-12 md:col-6">
+                                            <label for="3">{{'examDateExam' | translate}}</label>
+                                            <p-calendar appendTo="body" id="3"   [showTime]="true" [showSeconds]="false" placeholder="{{'examDateExam' | translate}}"  [(ngModel)]="item.dateExam"
+                                                      >
+                                            </p-calendar>
+                                            
+                                        </div>
+
+                        </div>
+                    </p-tabPanel>
+
+                            <p-tabPanel header="examExamGrades">
+                                        <div class="grid">
+                                            <div class="col">
+                                                            <div class="field col-11 md:col-5">
+                                                                <label>Student</label>
+                                                                <p-dropdown appendTo="body" [options]="students" [(ngModel)]="examGradesElement.student"
+                                                                        id="2"  [filter]="true" filterMatchMode="contains" [showClear]="true"
+                                                                        optionLabel="cin" placeholder="Student"  >
+                                                                </p-dropdown>
+                                                                
+                                                            </div>
+                                                            <div class="field col-12 md:col-6">
+                                                                <label for="3">Grade</label>
+                                                                <p-inputNumber  appendTo="body" class="mb-2 mr-2" id="grade" [(ngModel)]="examGradesElement.grade" placeholder="Grade"  ></p-inputNumber>
+                                                                
+                                                            </div>
+                                                <div class="field col-12 md:col-1">
+                                                    <button pButton pRipple type="button" icon="pi pi-plus" class="mt-4" label="OK" (click)="addExamGrades()"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="card">
+                                                <p-table [value]="item.examGrades" [scrollable]="true" scrollHeight="200px">
+                                                    <ng-template pTemplate="header">
+                                                        <tr>
+                                                                        <th>Student</th>
+                                                                        <th>Grade</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="body" let-p>
+                                                        <tr>
+                                                                    <td>{{p.student?.cin}}</td>
+                                                                        <td>{{p.grade}}</td>
+                                                            <td>
+                                                                <button (click)="deleteExamGrade(p)" pButton type="button" icon="pi pi-times"  class="p-button-rounded p-button-danger"></button>
+                                                                <button (click)="editExamGrade(p)" pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"></button>
+                                                            </td>
+                                                        </tr>
+                                                    </ng-template>
+                                                </p-table>
+                                            </div>
+                                        </div>
+                            </p-tabPanel>
+                </p-tabView>
+            </ng-template>
+
+            <ng-template pTemplate="footer" >
+                <div class="grid-footer">
+                        <div>
+                            <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-outlined" (click)="hideEditDialog()"></button>
+                        </div>
+                    <div>
+                        <button pButton pRipple label="Valider" icon="pi pi-check" style="margin:10px" (click)="edit()"></button>
+                    </div>
+                </div>
+            </ng-template>
+
+
+
+    </p-dialog>

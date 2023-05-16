@@ -1,0 +1,40 @@
+
+<p-dialog [(visible)]="viewDialog" [style]="{width: '70vw'}" header="{{'moduleGradeTabPan' | translate}}" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <p-tabView>
+            <p-tabPanel header="{{'moduleGradeTabPan' | translate}}">
+                <div class="grid">
+                    <div class="field col-12 md:col-6">
+                        <label for="1">{{'Student' | translate}}</label>
+                        <p-dropdown [options]="students" [(ngModel)]="item.student" id="1" [disabled]="true" optionLabel="cin" placeholder="{{'Student' | translate}}"></p-dropdown>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="2">{{'Module' | translate}}</label>
+                        <p-dropdown [options]="modules" [(ngModel)]="item.module" id="2" [disabled]="true" optionLabel="libelle" placeholder="{{'Module' | translate}}"></p-dropdown>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="3">{{'Semester' | translate}}</label>
+                        <p-dropdown [options]="semesters" [(ngModel)]="item.semester" id="3" [disabled]="true" optionLabel="libelle" placeholder="{{'Semester' | translate}}"></p-dropdown>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="4">{{'Grade' | translate}}</label>
+                        <p-inputNumber class="mb-2 mr-2" id="4" [disabled]="true" placeholder="{{'Grade' | translate}}" [(ngModel)]="item.grade"></p-inputNumber>
+                    </div>
+                </div>
+            </p-tabPanel>
+
+        </p-tabView>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer" >
+        <div class="grid-footer">
+            <div>
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-outlined" (click)="hideViewDialog()"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>
+
+
+

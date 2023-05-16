@@ -1,0 +1,245 @@
+        <p-dialog [(visible)]="createDialog" [style]="{width: '70vw'}" header="{{'moduleTabPan' | translate}}" [modal]="true" styleClass="p-fluid" [maximizable]="true" [draggable]="false" [resizable]="false">
+            <ng-template pTemplate="content" >
+                        <p-tabView>
+                            <p-tabPanel header="{{'{{'moduleTabPan' | translate}}' | translate}}">
+                                <div class="grid">
+
+                                                <div class="field col-12 md:col-6">
+                                                    <label for="1">{{'moduleCode' | translate}}<span style="color: red;">*</span></label>
+                                                    <input class="mb-2 mr-2" type="text" pInputText  placeholder="{{'moduleCode' | translate}}" id="1" [(ngModel)]="item.code"
+                                                            [ngClass]="{'ng-invalid ng-dirty' : !validModuleCode}"  />
+                                                    <small class='p-error' *ngIf='!validModuleCode'>Code est obligatoire.</small>
+                                                </div>
+
+
+
+                                                <div class="field col-12 md:col-6">
+                                                    <label for="2">{{'moduleLibelle' | translate}}<span style="color: red;">*</span></label>
+                                                    <input class="mb-2 mr-2" type="text" pInputText  placeholder="{{'moduleLibelle' | translate}}" id="2" [(ngModel)]="item.libelle"
+                                                            [ngClass]="{'ng-invalid ng-dirty' : !validModuleLibelle}"  />
+                                                    <small class='p-error' *ngIf='!validModuleLibelle'>Libelle est obligatoire.</small>
+                                                </div>
+
+
+
+                                </div>
+                            </p-tabPanel>
+                                    <p-tabPanel header="moduleTrainings">
+                                        <p-tabView [(activeIndex)]="activeTab">
+                                            <p-tabPanel header="Création">
+                                                    <div class="grid">
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <label for="1">Code<span style="color: red;">*</span></label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Code"
+                                                                               id="1" [(ngModel)]="trainingsElement.code" autofocus  [ngClass]="{'ng-invalid ng-dirty' : !validTrainingsCode}"  >
+                                                                        <small class='p-error' *ngIf='!validTrainingsCode'>Code est obligatoire.</small>
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <label for="2">Libelle<span style="color: red;">*</span></label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Libelle"
+                                                                               id="2" [(ngModel)]="trainingsElement.libelle" autofocus  [ngClass]="{'ng-invalid ng-dirty' : !validTrainingsLibelle}"  >
+                                                                        <small class='p-error' *ngIf='!validTrainingsLibelle'>Libelle est obligatoire.</small>
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <label for="3">Duration</label>
+                                                                        <p-inputNumber class="mb-2 mr-2" id="duration" placeholder="Duration"  [(ngModel)]="trainingsElement.duration"></p-inputNumber>
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <label for="4">Training cost</label>
+                                                                        <p-inputNumber class="mb-2 mr-2" id="trainingCost" placeholder="Training cost"  [(ngModel)]="trainingsElement.trainingCost"></p-inputNumber>
+                                                                        
+                                                                    </div>
+                                                        <div class="field col-12 md:col-1">
+                                                            <button pButton pRipple type="button" icon="pi pi-plus" class="mt-4" label="OK" (click)="addTrainings()"></button>
+                                                        </div>
+
+                                                    </div>
+                                            </p-tabPanel>
+                                            <p-tabPanel header="Liste {{item.trainings?.length > 0 ? '(' + item.trainings?.length + ')' : ''}}">
+                                                    <div class="card">
+                                                        <p-table [value]="item.trainings" [scrollable]="true" scrollHeight="200px">
+                                                            <ng-template pTemplate="header">
+                                                                <tr>
+                                                                                <th>Code</th>
+                                                                                <th>Libelle</th>
+                                                                                <th>Duration</th>
+                                                                                <th>Training cost</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </ng-template>
+                                                            <ng-template pTemplate="body" let-p>
+                                                                <tr>
+                                                                                <td>{{p.code}}</td>
+                                                                                <td>{{p.libelle}}</td>
+                                                                                <td>{{p.duration}}</td>
+                                                                                <td>{{p.trainingCost}}</td>
+                                                                    <td>
+                                                                        <button (click)="deleteTraining(p)" pButton type="button" icon="pi pi-times"  class="p-button-rounded p-button-danger"></button>
+                                                                        <button (click)="editTraining(p)" pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"></button>
+                                                                    </td>
+                                                                </tr>
+                                                            </ng-template>
+                                                        </p-table>
+                                                    </div>
+
+                                            </p-tabPanel>
+                                        </p-tabView>
+                                    </p-tabPanel>
+
+                                    <p-tabPanel header="moduleSemesters">
+                                        <p-tabView [(activeIndex)]="activeTab">
+                                            <p-tabPanel header="Création">
+                                                    <div class="grid">
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <label for="1">Code<span style="color: red;">*</span></label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Code"
+                                                                               id="1" [(ngModel)]="semestersElement.code" autofocus  [ngClass]="{'ng-invalid ng-dirty' : !validSemestersCode}"  >
+                                                                        <small class='p-error' *ngIf='!validSemestersCode'>Code est obligatoire.</small>
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <label for="2">Libelle<span style="color: red;">*</span></label>
+                                                                        <input class="mb-2 mr-2" type="text" pInputText placeholder="Libelle"
+                                                                               id="2" [(ngModel)]="semestersElement.libelle" autofocus  [ngClass]="{'ng-invalid ng-dirty' : !validSemestersLibelle}"  >
+                                                                        <small class='p-error' *ngIf='!validSemestersLibelle'>Libelle est obligatoire.</small>
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <label for="3">Start date</label>
+                                                                        <p-calendar appendTo="body" id="3"  [showTime]="true" [showSeconds]="false" placeholder="Start date" [(ngModel)]="semestersElement.startDate"
+                                                                                dateFormat="{{dateFormat}}" [showIcon]="true"  ></p-calendar>
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <label for="4">End date</label>
+                                                                        <p-calendar appendTo="body" id="4"  [showTime]="true" [showSeconds]="false" placeholder="End date" [(ngModel)]="semestersElement.endDate"
+                                                                                dateFormat="{{dateFormat}}" [showIcon]="true"  ></p-calendar>
+                                                                        
+                                                                    </div>
+                                                                    <div class="field col-11 md:col-3">
+                                                                        <label>Training</label>
+                                                                        <p-dropdown  appendTo="body"  [options]="trainings" [(ngModel)]="semestersElement.training"
+                                                                                     id="5"  [filter]="true" filterMatchMode="contains" [showClear]="true" optionLabel="libelle"
+                                                                                     placeholder="Training"  >
+                                                                        </p-dropdown>
+                                                                        
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <label></label>
+                                                                        <button pButton pRipple type="button" icon="pi pi-plus" (click)="openCreateTraining('training')" class="p-button-success one-colonne-btn-success-align"></button>
+                                                                    </div>
+                                                        <div class="field col-12 md:col-1">
+                                                            <button pButton pRipple type="button" icon="pi pi-plus" class="mt-4" label="OK" (click)="addSemesters()"></button>
+                                                        </div>
+
+                                                    </div>
+                                            </p-tabPanel>
+                                            <p-tabPanel header="Liste {{item.semesters?.length > 0 ? '(' + item.semesters?.length + ')' : ''}}">
+                                                    <div class="card">
+                                                        <p-table [value]="item.semesters" [scrollable]="true" scrollHeight="200px">
+                                                            <ng-template pTemplate="header">
+                                                                <tr>
+                                                                                <th>Code</th>
+                                                                                <th>Libelle</th>
+                                                                                <th>Start date</th>
+                                                                                <th>End date</th>
+                                                                                <th>Training</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </ng-template>
+                                                            <ng-template pTemplate="body" let-p>
+                                                                <tr>
+                                                                                <td>{{p.code}}</td>
+                                                                                <td>{{p.libelle}}</td>
+                                                                                <td>{{p.startDate | date: dateFormatColumn}}</td>
+                                                                                <td>{{p.endDate | date: dateFormatColumn}}</td>
+                                                                            <td>{{p.training?.libelle}}</td>
+                                                                    <td>
+                                                                        <button (click)="deleteSemester(p)" pButton type="button" icon="pi pi-times"  class="p-button-rounded p-button-danger"></button>
+                                                                        <button (click)="editSemester(p)" pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"></button>
+                                                                    </td>
+                                                                </tr>
+                                                            </ng-template>
+                                                        </p-table>
+                                                    </div>
+
+                                            </p-tabPanel>
+                                        </p-tabView>
+                                    </p-tabPanel>
+
+                                    <p-tabPanel header="moduleExams">
+                                        <p-tabView [(activeIndex)]="activeTab">
+                                            <p-tabPanel header="Création">
+                                                    <div class="grid">
+                                                                    <div class="field col-11 md:col-3">
+                                                                        <label>Semester</label>
+                                                                        <p-dropdown  appendTo="body"  [options]="semesters" [(ngModel)]="examsElement.semester"
+                                                                                     id="2"  [filter]="true" filterMatchMode="contains" [showClear]="true" optionLabel="libelle"
+                                                                                     placeholder="Semester"  >
+                                                                        </p-dropdown>
+                                                                        
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <label></label>
+                                                                        <button pButton pRipple type="button" icon="pi pi-plus" (click)="openCreateSemester('semester')" class="p-button-success one-colonne-btn-success-align"></button>
+                                                                    </div>
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <label for="3">Date exam</label>
+                                                                        <p-calendar appendTo="body" id="3"  [showTime]="true" [showSeconds]="false" placeholder="Date exam" [(ngModel)]="examsElement.dateExam"
+                                                                                dateFormat="{{dateFormat}}" [showIcon]="true"  ></p-calendar>
+                                                                        
+                                                                    </div>
+                                                        <div class="field col-12 md:col-1">
+                                                            <button pButton pRipple type="button" icon="pi pi-plus" class="mt-4" label="OK" (click)="addExams()"></button>
+                                                        </div>
+
+                                                    </div>
+                                            </p-tabPanel>
+                                            <p-tabPanel header="Liste {{item.exams?.length > 0 ? '(' + item.exams?.length + ')' : ''}}">
+                                                    <div class="card">
+                                                        <p-table [value]="item.exams" [scrollable]="true" scrollHeight="200px">
+                                                            <ng-template pTemplate="header">
+                                                                <tr>
+                                                                                <th>Semester</th>
+                                                                                <th>Date exam</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </ng-template>
+                                                            <ng-template pTemplate="body" let-p>
+                                                                <tr>
+                                                                            <td>{{p.semester?.libelle}}</td>
+                                                                                <td>{{p.dateExam | date: dateFormatColumn}}</td>
+                                                                    <td>
+                                                                        <button (click)="deleteExam(p)" pButton type="button" icon="pi pi-times"  class="p-button-rounded p-button-danger"></button>
+                                                                        <button (click)="editExam(p)" pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"></button>
+                                                                    </td>
+                                                                </tr>
+                                                            </ng-template>
+                                                        </p-table>
+                                                    </div>
+
+                                            </p-tabPanel>
+                                        </p-tabView>
+                                    </p-tabPanel>
+
+
+                        </p-tabView>
+
+            </ng-template>
+
+            <ng-template pTemplate="footer" >
+                <div class="grid-step">
+                        <div style="margin-left: auto;">
+                            <button pButton pRipple  label="{{'validate' | translate}}"  icon="pi pi-check" style="margin:10px" (click)="save()"></button>
+                        </div>
+                        <div>
+                            <button pButton pRipple  label="{{'cancel' | translate}}" icon="pi pi-times" class="p-button-outlined" (click)="hideCreateDialog()"></button>
+                        </div>
+
+                </div>
+            </ng-template>
+
+
+            <app-training-create-admin></app-training-create-admin>
+            <app-semester-create-admin></app-semester-create-admin>
+
+    </p-dialog>
